@@ -1,0 +1,58 @@
+''' get_led takes an integer number between 0 and 9 and it returns a list displaying this number '''
+def get_led(int_value):
+    # 1 is the only number needing a 1 by 5 list
+    if int_value == 1:
+        led_list = [["#" for i in range(1)] for x in range(5)]
+        return led_list
+    # This code builds an 8 digit led from #
+    # it's later adjusted as necessary depending on the int_value
+    led_list=[]
+    for i in range(5):
+        if i == 1 or i ==3:
+            led_list.append(["#", " ", "#"])
+        else:
+            led_list.append(["#", "#", "#"])
+
+    return led_list
+
+''' print_led takes a 2D list and prints it nicely'''
+def print_led(led):
+    for row in led:
+        for element in row:
+            # if it's the last element print a new line
+            print(element, end="")
+
+''' led_display takes a list of numbers stored as strings and simulates the work of a seven-display device '''
+def led_display(num_list):
+    for value in num_list:
+        num = int(value)
+        led = get_led(num)
+        print_led(led)
+
+''' main prompts the user for input, handles bad inputs and calls other functions to do the work'''
+def main():
+    # get user input and handle errors
+    need_input = True
+    while need_input:
+        try:
+            num = int(input("Pick a positive number: "))
+            assert num >= 0
+            need_input = False
+        except AssertionError:
+            print("This is not a positive number")
+        except ValueError:
+            print("Please follow instructions")
+        except KeyboardInterrupt:
+            print("Okay, bye")
+            break
+        except BaseException:
+            print("Something went wrong")
+    # convert num to string and split its numbers into elements of a list
+    num_string = str(num)
+    num_list = []
+    for i in range(len(num_string)):
+        num_list.append(num_string[i])
+    led_display(num_list)
+
+
+main()
