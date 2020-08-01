@@ -1,26 +1,54 @@
-''' get_led takes an integer number between 0 and 9 and it returns a list displaying this number '''
+''' get_led takes an integer number between 0 and 9 and it returns a list containing the needed # in the proper location in order for the display_int to display this number '''
 def get_led(int_value):
+    # initializing an empty list
+    led_list=[]
     # 1 is the only number needing a 1 by 5 list
     if int_value == 1:
         led_list = [["#" for i in range(1)] for x in range(5)]
         return led_list
     # This code builds an 8 digit led from #
-    # it's later adjusted as necessary depending on the int_value
-    led_list=[]
+    # it's later adjusted as necessary depending on the input
     for i in range(5):
-        if i == 1 or i ==3:
+        if i == 1 or i == 3:
             led_list.append(["#", " ", "#"])
         else:
             led_list.append(["#", "#", "#"])
+    # There's no built-in switch statement in Python. I looked at how to do a switching behavior with classes and objects, I'm going to use if-elif-else switching instead. This section of code can be improved - there's a lot of repition.
+    if int_value == 0:
+        led_list[2][1] = " "
+    elif int_value == 2:
+        led_list[1][0] = " "
+        led_list[3][2] = " "
+    elif int_value == 3:
+        led_list[1][0] = " "
+        led_list[3][0] = " "
+    elif int_value == 4:
+        led_list[0][1] = " "
+        led_list[3][0] = " "
+        led_list[4][0] = " "
+        led_list[4][1] = " "
+    elif int_value == 5:
+        led_list[1][2] = " "
+        led_list[3][0] = " "
+    elif int_value == 6:
+        led_list[1][2] = " "
+    elif int_value == 7:
+        led_list[1][0] = " "
+        led_list[2][0] = " "
+        led_list[2][1] = " "
+        led_list[3][0] = " "
+        led_list[4][0] = " "
+        led_list[4][1] = " "
+    elif int_value == 9:
+        led_list[3][0] = " "
 
     return led_list
 
 ''' print_led takes a 2D list and prints it nicely'''
 def print_led(led):
     for row in led:
-        for element in row:
-            # if it's the last element print a new line
-            print(element, end="")
+        clean_row = " ".join(row)
+        print(clean_row)
 
 ''' led_display takes a list of numbers stored as strings and simulates the work of a seven-display device '''
 def led_display(num_list):
