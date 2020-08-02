@@ -39,8 +39,12 @@ def EnterMove(board):
             print("Illegal move")
         except ValueError:
             print("Illegal value")
-        #except:
-            #print("error")
+        # a more graceful way to exit in the middle
+        except KeyboardInterrupt:
+            print("okay, bye")
+            sys.exit()
+        except:
+            print("error")
     found = False
     for row in board:
         if move in row:
@@ -48,7 +52,7 @@ def EnterMove(board):
             row[move_position] = player_symbol
             found = True
     if found == False:
-        print("Sorry, ", move, " is occupied")
+        print("Sorry, position # ", move, " is occupied")
 
 
 #
@@ -105,7 +109,7 @@ def DrawMove(board):
         print("unkown error. We shouldn't reach here")
 
 #
-# Program entry and program exit
+# Game starts here
 #
 def TicTacToe(board):
     free_fields = MakeListOfFreeFields(board)
