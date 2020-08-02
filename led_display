@@ -1,3 +1,4 @@
+''' bad approach '''
 ''' get_led takes an integer number between 0 and 9 and it returns a list containing the needed # in the proper location in order for the display_int to display this number '''
 def get_led(int_value):
     # initializing an empty list
