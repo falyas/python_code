@@ -1,87 +1,44 @@
-''' bad approach '''
-''' get_led takes an integer number between 0 and 9 and it returns a list containing the needed # in the proper location in order for the display_int to display this number '''
-def get_led(int_value):
-    # initializing an empty list
-    led_list=[]
-    # 1 is the only number needing a 1 by 5 list
-    if int_value == 1:
-        led_list = [["#" for i in range(1)] for x in range(5)]
-        return led_list
-    # This code builds an 8 digit led from #
-    # it's later adjusted as necessary depending on the input
-    for i in range(5):
-        if i == 1 or i == 3:
-            led_list.append(["#", " ", "#"])
-        else:
-            led_list.append(["#", "#", "#"])
-    # There's no built-in switch statement in Python. I looked at how to do a switching behavior with classes and objects, I'm going to use if-elif-else switching instead. This section of code can be improved - there's a lot of repition.
-    if int_value == 0:
-        led_list[2][1] = " "
-    elif int_value == 2:
-        led_list[1][0] = " "
-        led_list[3][2] = " "
-    elif int_value == 3:
-        led_list[1][0] = " "
-        led_list[3][0] = " "
-    elif int_value == 4:
-        led_list[0][1] = " "
-        led_list[3][0] = " "
-        led_list[4][0] = " "
-        led_list[4][1] = " "
-    elif int_value == 5:
-        led_list[1][2] = " "
-        led_list[3][0] = " "
-    elif int_value == 6:
-        led_list[1][2] = " "
-    elif int_value == 7:
-        led_list[1][0] = " "
-        led_list[2][0] = " "
-        led_list[2][1] = " "
-        led_list[3][0] = " "
-        led_list[4][0] = " "
-        led_list[4][1] = " "
-    elif int_value == 9:
-        led_list[3][0] = " "
+digits = { '0': '1111110',  	# 0
+	   '1': '0110000',	# 1
+	   '2': '1101101',	# 2
+	   '3': '1111001',	# 3
+	   '4': '0110011',	# 4
+	   '5': '1011011',	# 5
+	   '6': '1011111',	# 6
+	   '7': '1110000',	# 7
+	   '8': '1111111',	# 8
+	   '9': '1111011',	# 9
+	   }
 
-    return led_list
+def printNumber(num):
+	global digits
+	digs = str(num)
+	lines = [ '' for l in range(5) ]
+	for d in digs:
+        # only display segmets for a num with more than 0 digits
+		segs = [ [' ',' ',' '] for l in range(5) ]
+        # the 1's in the pattern of the digit are the segments to be turned on
+		ptrn = digits.get(d)
+		if ptrn[0] == '1':
+			segs[0][0] = segs[0][1] = segs[0][2] = '*'
+		if ptrn[1] == '1':
+			segs[0][2] = segs[1][2] = segs[2][2] = '*'
+		if ptrn[2] == '1':
+			segs[2][2] = segs[3][2] = segs[4][2] = '*'
+		if ptrn[3] == '1':
+			segs[4][0] = segs[4][1] = segs[4][2] = '*'
+		if ptrn[4] == '1':
+			segs[2][0] = segs[3][0] = segs[4][0] = '*'
+		if ptrn[5] == '1':
+			segs[0][0] = segs[1][0] = segs[2][0] = '*'
+		if ptrn[6] == '1':
+			segs[2][0] = segs[2][1] = segs[2][2] = '*'
+		for l in range(5):
+			#this line enables printing multiple digits next to each other
+			#by joining the characters in the segment array into a string
+            #The result is a horizonal line segment for multiple digit
+			lines[l] += ''.join(segs[l]) + '  '
+	for l in lines:
+		print(l)
 
-''' print_led takes a 2D list and prints it nicely'''
-def print_led(led):
-    for row in led:
-        clean_row = " ".join(row)
-        print(clean_row)
-
-''' led_display takes a list of numbers stored as strings and simulates the work of a seven-display device '''
-def led_display(num_list):
-    for value in num_list:
-        num = int(value)
-        led = get_led(num)
-        print_led(led)
-
-''' main prompts the user for input, handles bad inputs and calls other functions to do the work'''
-def main():
-    # get user input and handle errors
-    need_input = True
-    while need_input:
-        try:
-            num = int(input("Pick a positive number: "))
-            assert num >= 0
-            need_input = False
-        except AssertionError:
-            print("This is not a positive number")
-        except ValueError:
-            print("Please follow instructions")
-        except KeyboardInterrupt:
-            print("Okay, bye")
-            break
-        except BaseException:
-            print("Something went wrong")
-    # convert num to string and split its numbers into elements of a list
-    num_string = str(num)
-    num_list = []
-    for i in range(len(num_string)):
-        num_list.append(num_string[i])
-    led_display(num_list)
-
-
-main()
+printNumber(int(input("Enter the number you wish to display: ")))
