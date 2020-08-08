@@ -1,3 +1,5 @@
+''' I tried this problem and solved it but could not get the numbers to print next to each other. 
+this solution in this file right now is not completely written by me. '''
 digits = { '0': '1111110',  	# 0
 	   '1': '0110000',	# 1
 	   '2': '1101101',	# 2
