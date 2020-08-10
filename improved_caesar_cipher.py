@@ -13,20 +13,26 @@ Your task is to write a program which:
 
 '''##########################################################################'''
 
-''' Caesar cipher - encrypt the message'''
+''' Caesar cipher - encrypt the message with a shift key
+there's an algm behind this approach'''
 def caesar_cipher_encrypter(text, num):
     cipher = ''
     for char in text:
         if not char.isalpha():
             cipher += char
             continue
+        # Calculate R, the rank of char in the alphabet
+        # Calculate R2 = (R+shift) Module 26
+        # Write the letter with rank R2 in the alphabet
         char = char.upper()
         code = ord(char) + num
-        # problem starts here
-        if code > ord('Z'):
-            code = ord('A')
-        # ends here
-        cipher += chr(code)
+        # find the code of the first letter
+        first = ord('A')
+        # make correction
+        code -= first
+        code %= 26
+        # append the encoded character to message
+        cipher += chr(first + code)
     return cipher
 
 ''' preserve casing - the casing of the letter is preserved in a
@@ -76,5 +82,4 @@ while(not okay):
         print("Shift is not a number")
     except Exception as e:
         print(e)
-
-        
+        print("Base exception")
